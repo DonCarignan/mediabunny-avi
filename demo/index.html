@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Extension player | Mediabunny container extensions</title>
+		<meta name="description" content="Plays containers Mediabunny does not read on its own, through extension packages built on its custom container API.">
+		<link rel="stylesheet" href="./style.css">
+		<script type="module" src="./media-player.ts"></script>
+	</head>
+
+	<body>
+		<h1>Extension player</h1>
+		<p class="lead">
+			Mediabunny's own media player, with container extensions registered. Each one adds a format Mediabunny
+			can't read on its own.
+		</p>
+
+		<h2 class="section-label">Container extensions</h2>
+		<ul class="extensions" id="extensions"></ul>
+
+		<div class="buttons" id="buttons">
+			<button id="select-file">Select local file</button>
+			<button id="load-url">Load remote URL</button>
+		</div>
+
+		<p class="file-name" id="file-name"></p>
+
+		<hr style="display: none;">
+
+		<p class="error" id="error-element"></p>
+		<p class="warning" id="warning-element"></p>
+		<p class="loading" id="loading-element" style="display: none;">Loading...</p>
+
+		<div id="player" style="display: none;">
+			<canvas width="1280" height="720"></canvas>
+
+			<div id="controls" style="opacity: 0;">
+				<button id="play-button" class="icon-button">
+					<svg id="play-icon" viewBox="0 0 24 24" aria-label="Play"><path d="m6 3 14 9-14 9z"/></svg>
+					<svg id="pause-icon" viewBox="0 0 24 24" aria-label="Pause" style="display: none;">
+						<path d="M9 4v16M15 4v16"/>
+					</svg>
+				</button>
+
+				<div class="volume">
+					<button id="volume-button" class="icon-button">
+						<span id="volume-icon-wrapper">
+							<svg viewBox="0 0 24 24" aria-label="Muted"><path d="M11 5 6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg>
+							<svg viewBox="0 0 24 24" aria-label="Volume off"><path d="M11 5 6 9H3v6h3l5 4z"/></svg>
+							<svg viewBox="0 0 24 24" aria-label="Volume low"><path d="M11 5 6 9H3v6h3l5 4zM16 9.5a3.5 3.5 0 0 1 0 5"/></svg>
+							<svg viewBox="0 0 24 24" aria-label="Volume medium"><path d="M11 5 6 9H3v6h3l5 4zM16 9.5a3.5 3.5 0 0 1 0 5M19 7a8 8 0 0 1 0 10"/></svg>
+							<svg viewBox="0 0 24 24" aria-label="Volume high"><path d="M11 5 6 9H3v6h3l5 4zM16 9.5a3.5 3.5 0 0 1 0 5M19 7a8 8 0 0 1 0 10M21.5 4.5a12 12 0 0 1 0 15"/></svg>
+						</span>
+					</button>
+
+					<div id="volume-bar-container" class="bar-container">
+						<div id="volume-bar" class="bar"><span class="knob"></span></div>
+					</div>
+				</div>
+
+				<p id="current-time" class="time"></p>
+
+				<div id="progress-bar-container" class="bar-container progress">
+					<div id="progress-bar" class="bar"><span class="knob"></span></div>
+				</div>
+
+				<p id="duration" class="time"></p>
+
+				<button id="live-dot" title="Seek to live edge" style="display: none;"></button>
+
+				<button id="fullscreen-button" class="icon-button">
+					<svg viewBox="0 0 24 24" aria-label="Fullscreen">
+						<path d="M3 8V5a2 2 0 0 1 2-2h3m8 0h3a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<section id="info-panel" class="info" style="display: none;">
+			<h2>File</h2>
+			<dl id="info-file"></dl>
+			<h2>Tracks</h2>
+			<div id="info-tracks"></div>
+			<div id="info-tags-wrapper" style="display: none;">
+				<h2>Metadata</h2>
+				<dl id="info-tags"></dl>
+			</div>
+		</section>
+
+		<footer>
+			<p>
+				Player adapted from
+				<a href="https://github.com/Vanilagy/mediabunny/tree/main/examples/media-player" target="_blank" rel="noreferrer">Mediabunny's media player example</a>
+				by Vanilagy, MPL-2.0.
+			</p>
+		</footer>
+	</body>
+</html>
